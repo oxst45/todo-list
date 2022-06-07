@@ -40,8 +40,23 @@ function App() {
         ]
     })
 
+    const toggleTaskCheck = (tlID: string, taskID: string, isDone: boolean) => {
+        const changedTlID = tasks[tlID].map((t) => {
+            return taskID === t.id ? {...t, isDone} : t;
+        });
+        setTasks({...tasks,
+            [tlID]: changedTlID
+        })
+    }
     const todoListsComponents = todoLists.map((tl) => {
-        return <Todo tasks={tasks[tl.id]} title={tl.title} key={tl.id}/>
+        return <Todo
+            key={tl.id}
+
+            tlID={tl.id}
+            tasks={tasks[tl.id]}
+            title={tl.title}
+            toggleTaskCheck={toggleTaskCheck}
+        />
     })
 
     return (

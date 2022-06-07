@@ -2,17 +2,28 @@ import React from 'react';
 import {TasksType, TaskType} from "../App";
 
 export type TodoPropsType = {
+    tlID: string
     title: string
     tasks: Array<TaskType>
+    toggleTaskCheck: (tlID: string, taskID: string, isDone: boolean) => void
 }
 
 export function Todo(props: TodoPropsType) {
 
+
+
     const tasksComponents = props.tasks.map((t) => {
+
+        let isChecked = t.isDone;
+
+        const onCheckHandler = () => {
+            isChecked = !isChecked;
+            props.toggleTaskCheck(props.tlID, t.id, isChecked)
+        }
         return (
-            <li>
+            <li key={t.id}>
                 <span>{t.taskName}</span>
-                <input type="checkbox" checked={t.isDone}/>
+                <input type="checkbox" checked={t.isDone} onChange={onCheckHandler}/>
             </li>
         )
     })
